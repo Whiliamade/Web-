@@ -1,45 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>💎 Premium Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <meta name="description" content="Dashboard Premium Berisi Link Eksklusif" />
+  <meta name="keywords" content="dashboard, link eksklusif, premium, video, foto" />
+  <meta name="author" content="lonely_Hawck" />
+  <title>💎 Dashboard Premium</title>
   <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
 </head>
 <body>
-  <!-- Proteksi login agar hanya bisa masuk dari index.html -->
-  <script>
+   <script>
     if (!document.referrer.includes("index.html")) {
       window.location.href = "index.html";
     }
-  </script>
+   </script>
+  <nav class="breadcrumb">
+    <ul>
+      <li><a href="index.html">Beranda</a></li>
+      <li>Dashboard</li>
+    </ul>
+  </nav>
 
-  <h1>💎 Kumpulan <span class="highlight">Link Eksklusif</span></h1>
-  <p>Credit: <span class="highlight">lonely_Hawck</span></p>
-  <p>Menu File: <span class="highlight">Terjamin</span> - <span class="highlight">Hot</span></p>
-  <p class="highlight-red">M*ma M*d*</p>
-  <p class="highlight-red">G*d*s Sk*l*h</p>
-  <p class="highlight-red">P*raw*n S*xy</p>
-  <p><span class="highlight">T*rjamin S*nge</span> 💧</p>
-
-  <div class="pack">
-    <h2>⚡ M*ma M*d* ⚡</h2>
-    <p>10 Vidio<br>100 Foto<br>🔥 Link download tersedia</p>
-    <button class="btn-buy" onclick="playClick(); window.location.href='https://vhack.cc/?userId=1164992'">OPEN FILE</button>
+  <div class="top-bar">
+    <h1>💎 <span class="highlight">Link Eksklusif</span></h1>
+    <select id="langSelect" onchange="toggleLanguage()">
+      <option value="id">🇮🇩 Indonesia</option>
+      <option value="en">🇺🇸 English</option>
+    </select>
+    <input type="text" id="searchInput" onkeyup="searchContent()" placeholder="🔍 Cari konten...">
   </div>
 
-  <div class="pack">
-    <h2>⚡ G*d*s Sk*l*h ⚡</h2>
-    <p>3 Vidio<br>27 Foto<br>🔥 Link download tersedia</p>
-    <button class="btn-buy" onclick="playClick(); window.location.href='https://vhack.cc/?userId=1164992'">OPEN FILE</button>
-  </div>
+  <div class="content-area">
+    <div class="pack" data-keywords="mama madu video foto">
+      <h2>⚡ <span class="lang-id">M*ma M*d*</span><span class="lang-en">Mother M*lk</span> ⚡</h2>
+      <p>10 <span class="lang-id">Vidio</span><span class="lang-en">Videos</span><br>100 Foto</p>
+      <button class="btn-buy" onclick="playClick(); window.location.href='https://vhack.cc/?userId=1164992'">OPEN FILE</button>
+    </div>
 
-  <div class="pack">
-    <h2>⚡ P*raw*n S*xy ⚡</h2>
-    <p>13 Vidio<br>56 Foto<br>🔥 Link download tersedia</p>
-    <button class="btn-buy" onclick="playClick(); window.location.href='https://vhack.cc/?userId=1164992'">OPEN FILE</button>
+    <div class="pack" data-keywords="gadis sekolah video foto">
+      <h2>⚡ <span class="lang-id">G*d*s Sk*l*h</span><span class="lang-en">School G*rl</span> ⚡</h2>
+      <p>3 Vidio<br>27 Foto</p>
+      <button class="btn-buy" onclick="playClick(); window.location.href='https://vhack.cc/?userId=1164992'">OPEN FILE</button>
+    </div>
+
+    <div class="pack" data-keywords="perawan sexy video foto">
+      <h2>⚡ <span class="lang-id">P*raw*n S*xy</span><span class="lang-en">Sexy V*rg*n</span> ⚡</h2>
+      <p>13 Vidio<br>56 Foto</p>
+      <button class="btn-buy" onclick="playClick(); window.location.href='https://vhack.cc/?userId=1164992'">OPEN FILE</button>
+    </div>
   </div>
 
   <audio id="bgmusic" autoplay loop>
