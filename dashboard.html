@@ -11,11 +11,19 @@
   <script src="script.js" defer></script>
 </head>
 <body>
-   <script>
+  <!-- Proteksi redirect -->
+  <script>
     if (!document.referrer.includes("index.html")) {
       window.location.href = "index.html";
     }
-   </script>
+  </script>
+
+  <!-- 🔔 Notifikasi login berhasil -->
+  <div id="loginNotif" style="display:none; background:#4caf50; color:white; padding:10px; text-align:center;">
+    ✅ Login berhasil! Selamat datang.
+  </div>
+
+  <!-- Breadcrumb Navigasi -->
   <nav class="breadcrumb">
     <ul>
       <li><a href="index.html">Beranda</a></li>
@@ -23,6 +31,7 @@
     </ul>
   </nav>
 
+  <!-- Top Bar dengan Bahasa, Pencarian, dan Tema -->
   <div class="top-bar">
     <h1>💎 <span class="highlight">Link Eksklusif</span></h1>
     <select id="langSelect" onchange="toggleLanguage()">
@@ -30,8 +39,10 @@
       <option value="en">🇺🇸 English</option>
     </select>
     <input type="text" id="searchInput" onkeyup="searchContent()" placeholder="🔍 Cari konten...">
+    <button id="themeToggle">🌓 Ganti Tema</button>
   </div>
 
+  <!-- Konten Utama -->
   <div class="content-area">
     <div class="pack" data-keywords="mama madu video foto">
       <h2>⚡ <span class="lang-id">M*ma M*d*</span><span class="lang-en">Mother M*lk</span> ⚡</h2>
@@ -52,6 +63,7 @@
     </div>
   </div>
 
+  <!-- Audio -->
   <audio id="bgmusic" autoplay loop>
     <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
   </audio>
@@ -59,8 +71,11 @@
     <source src="https://www.myinstants.com/media/sounds/mouse-click.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- Ikon Musik -->
   <div id="music-icon" title="Klik untuk play/pause">
-    <svg viewBox="0 0 24 24"><path d="M9 3v12c-.6-.3-1.3-.5-2-.5-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4V8l8-2v7c-.6-.3-1.3-.5-2-.5-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4V3L9 5.5V3z"/></svg>
+    <svg viewBox="0 0 24 24">
+      <path d="M9 3v12c-.6-.3-1.3-.5-2-.5-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4V8l8-2v7c-.6-.3-1.3-.5-2-.5-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4V3L9 5.5V3z"/>
+    </svg>
   </div>
 </body>
-  </html>
+</html>
