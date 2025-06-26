@@ -130,4 +130,51 @@ h1 {
 
 .lang-en {
   display: none;
+}
+/* ===== Light Mode Support ===== */
+body.light-mode {
+  background: #f8f8f8;
+  color: #111;
+}
+
+body.light-mode .pack {
+  background-color: #fff;
+  color: #222;
+  border: 1px solid #aaa;
+}
+
+body.light-mode .btn-buy {
+  background-color: #444;
+  color: #fff;
+}
+
+body.light-mode .btn-buy:hover {
+  background-color: #333;
+}
+
+/* ===== Tombol Ganti Tema ===== */
+#themeToggle {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  background: var(--highlight);
+  transition: background 0.3s, transform 0.1s;
+  margin-top: 8px;
+}
+#themeToggle:hover {
+  transform: scale(1.05);
+}
+
+/* ===== Notifikasi Login ===== */
+#loginNotif {
+  margin: 10px auto;
+  max-width: 420px;
+  border-radius: 8px;
+  padding: 10px;
+  background: #4caf50;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   }
