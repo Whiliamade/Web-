@@ -80,23 +80,16 @@
   </div>
 
   <script>
-    const correctPass = "276212";
-    function checkPass() {
-      const input = document.getElementById("passInput").value;
-      const success = document.getElementById("successText");
-      const error = document.getElementById("errorText");
-
-      if (input === correctPass) {
-        error.style.display = "none";
-        success.style.display = "block";
-        setTimeout(() => {
-          window.location.href = "dashboard.html";
-        }, 1500);
-      } else {
-        error.style.display = "block";
-        success.style.display = "none";
-      }
+  const correctPass = "276212";
+  function checkPass() {
+    const input = document.getElementById("passInput").value;
+    if (input === correctPass) {
+      localStorage.setItem("auth", "true"); // simpan status login
+      window.location.href = "dashboard.html";
+    } else {
+      document.getElementById("errorText").style.display = "block";
     }
-  </script>
+  }
+</script>
 </body>
 </html>
