@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Secure login for premium content dashboard" />
+  <meta name="keywords" content="login, secure access, dashboard, premium files" />
+  <meta name="author" content="lonely_Hawck" />
+  <title>🔒 Secure Login</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #000000, #434343);
+      font-family: 'Segoe UI', sans-serif;
+      color: #f1f1f1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: #1e1e1e;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 170, 255, 0.3);
+      animation: fadeIn 1.2s ease-out;
+    }
+    h1 {
+      color: #ffaa00;
+    }
+    input[type="password"] {
+      padding: 10px;
+      width: 100%;
+      max-width: 250px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: none;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #ffaa00;
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s, transform 0.2s;
+    }
+    button:hover {
+      background-color: #ff8800;
+      transform: scale(1.05);
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+      display: none;
+    }
+    .success {
+      color: lightgreen;
+      display: none;
+      margin-top: 15px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Enter Password</h1>
+    <input type="password" id="passInput" placeholder="Enter access key" />
+    <br />
+    <button onclick="checkPass()">ACCESS</button>
+    <p class="error" id="errorText">Incorrect password. Try again.</p>
+    <p class="success" id="successText">Access Granted. Redirecting...</p>
+  </div>
+
+  <script>
+    const correctPass = "276212";
+    function checkPass() {
+      const input = document.getElementById("passInput").value;
+      const success = document.getElementById("successText");
+      const error = document.getElementById("errorText");
+
+      if (input === correctPass) {
+        error.style.display = "none";
+        success.style.display = "block";
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 1500);
+      } else {
+        error.style.display = "block";
+        success.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+:root {
+  --lux-bg1: #0f0c29;
+  --lux-bg2: #302b63;
+  --lux-bg3: #24243e;
+  --text-light: #f0e6d2;
+  --highlight: #ffcc70;
+  --accent: #c4a47c;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: linear-gradient(-45deg, var(--lux-bg1), var(--lux-bg2), var(--lux-bg3), #000);
+  background-size: 400% 400%;
+  animation: luxuryBG 20s ease infinite;
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--text-light);
+  text-align: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+@keyframes luxuryBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  color: var(--highlight);
+  text-shadow: 0 0 12px var(--accent);
+  margin-bottom: 0.5em;
+}
+
+.highlight { color: var(--accent); font-weight: bold; }
+.highlight-red { color: red; }
+
+.pack {
+  background-color: rgba(15, 15, 15, 0.8);
+  border: 1px solid var(--accent);
+  border-radius: 16px;
+  padding: 25px;
+  margin: 20px auto;
+  max-width: 400px;
+  box-shadow: 0 0 15px rgba(255, 204, 112, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pack:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 25px rgba(255, 204, 112, 0.4);
+}
+
+.btn-buy {
+  background-color: var(--highlight);
+  color: #000;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background 0.3s, transform 0.1s;
+  margin-top: 10px;
+}
+
+.btn-buy:hover { background-color: #e0a800; }
+.btn-buy:active { transform: scale(0.96); }
+
+#music-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  cursor: pointer;
+}
+
+#music-icon svg {
+  width: 30px;
+  height: 30px;
+  fill: var(--highlight);
+  animation: pulse 1s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+@media screen and (max-width: 480px) {
+  .pack { padding: 18px; }
+  h1 { font-size: 22px; }
+}
