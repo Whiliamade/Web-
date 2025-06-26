@@ -7,36 +7,14 @@
   <meta name="keywords" content="dashboard, galeri pribadi, koleksi, file, upload" />
   <meta name="author" content="lonely_Hawcker" />
   <title>💎 Dashboard Pribadi</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
-  <style>
-    /* 🌟 Tambahan Styling Upload */
-    .btn-buy {
-      background-color: #6200ea;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-    .btn-buy:hover {
-      background-color: #3700b3;
-    }
-    .content-area {
-      padding: 20px;
-    }
-    .pack {
-      background: #f1f1f1;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 10px;
-    }
-  </style>
   <script src="script.js" defer></script>
 </head>
 <body>
-  <!-- TARUH DI AKHIR SEBELUM </body> -->
 <footer style="text-align: center; padding: 10px 0; font-size: 13px; margin-top: 40px;">
+  <!-- Proteksi redirect -->
   <p style="color: #ccc;">🚀 Status Deploy Web:</p>
   <a href="https://app.netlify.com/projects/viralidnet/deploys" target="_blank" style="display:inline-block;">
     <img src="https://api.netlify.com/api/v1/badges/d9276ec6-1911-4577-ba5e-119fbf51cfdb/deploy-status"
@@ -44,19 +22,19 @@
          style="border: none; max-width: 140px; height: auto;" />
   </a>
 </footer>
-  <!-- 🔐 Proteksi redirect -->
+  <!-- Proteksi redirect -->
   <script>
     if (localStorage.getItem("auth") !== "true") {
       window.location.href = "index.html";
     }
   </script>
 
-  <!-- 🔔 Notifikasi login berhasil -->
-  <div id="loginNotif" style="display:none; background:#4caf50; color:white; padding:10px; text-align:center;">
+  <!-- Notifikasi login -->
+  <div id="loginNotif" style="display:none;">
     ✅ Selamat datang kembali, lonely_Hawcker!
   </div>
 
-  <!-- Navigasi Atas -->
+  <!-- Navigasi -->
   <nav class="breadcrumb">
     <ul>
       <li><a href="dashboard.html">Beranda</a></li>
@@ -65,19 +43,22 @@
     </ul>
   </nav>
 
-  <!-- Top Bar -->
+  <!-- Bagian Atas -->
   <div class="top-bar">
     <h1>💎 <span class="highlight">Koleksi Pribadi</span></h1>
     <p>Credit: <span class="highlight">lonely_Hawcker</span></p>
+
     <select id="langSelect" onchange="toggleLanguage()">
       <option value="id">🇮🇩 Indonesia</option>
       <option value="en">🇺🇸 English</option>
     </select>
+
     <input type="text" id="searchInput" onkeyup="searchContent()" placeholder="🔍 Cari konten...">
+
     <button id="themeToggle">🌓 Ganti Tema</button>
   </div>
 
-  <!-- Konten Utama -->
+  <!-- Konten Galeri -->
   <div class="content-area">
     <div class="pack" data-keywords="dokumentasi keluarga video foto">
       <h2>📁 Dokumentasi Keluarga</h2>
@@ -98,39 +79,36 @@
     </div>
   </div>
 
-  <!-- 🎵 Musik Background -->
+  <!-- Musik Latar -->
   <audio id="bgmusic" autoplay loop>
     <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- 🎧 Suara Klik -->
+  <!-- Suara Klik -->
   <audio id="clickSound">
     <source src="https://www.myinstants.com/media/sounds/mouse-click.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- 🔊 Ikon Musik -->
-  <div id="music-icon" title="Klik untuk play/pause" style="cursor:pointer;">
-    <svg viewBox="0 0 24 24" width="30" height="30">
-      <path fill="#000" d="M9 3v12c-.6-.3-1.3-.5-2-.5-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4V8l8-2v7c-.6-.3-1.3-.5-2-.5-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4V3L9 5.5V3z"/>
+  <!-- Ikon Musik -->
+  <div id="music-icon" title="Klik untuk play/pause">
+    <svg viewBox="0 0 24 24">
+      <path d="M9 3v12c-.6-.3-1.3-.5-2-.5-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4V8l8-2v7c-.6-.3-1.3-.5-2-.5-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4V3L9 5.5V3z"/>
     </svg>
   </div>
 
-  <!-- 📜 JavaScript Upload Form -->
+  <!-- Script Fungsional -->
   <script>
     function uploadFile() {
-      document.getElementById('clickSound').play(); // mainkan suara klik
+      document.getElementById('clickSound').play();
       window.open("https://forms.gle/yEEFf1b7pAN5ruE88", "_blank");
     }
 
-    // Opsional: toggle music
     document.getElementById('music-icon').addEventListener('click', function () {
       const music = document.getElementById('bgmusic');
-      if (music.paused) {
-        music.play();
-      } else {
-        music.pause();
-      }
+      if (music.paused) music.play();
+      else music.pause();
     });
   </script>
+
 </body>
 </html>
