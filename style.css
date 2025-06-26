@@ -7,7 +7,12 @@
   --accent: #c4a47c;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* === RESET & DASAR === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
   background: linear-gradient(-45deg, var(--lux-bg1), var(--lux-bg2), var(--lux-bg3), #000);
@@ -26,6 +31,7 @@ body {
   100% { background-position: 0% 50%; }
 }
 
+/* === TYPOGRAFI === */
 h1 {
   font-family: 'Playfair Display', serif;
   color: var(--highlight);
@@ -36,6 +42,7 @@ h1 {
 .highlight { color: var(--accent); font-weight: bold; }
 .highlight-red { color: red; }
 
+/* === KONTEN / KARTU === */
 .pack {
   background-color: rgba(15, 15, 15, 0.8);
   border: 1px solid var(--accent);
@@ -52,6 +59,11 @@ h1 {
   box-shadow: 0 0 25px rgba(255, 204, 112, 0.4);
 }
 
+.content-area {
+  padding: 20px;
+}
+
+/* === TOMBOL === */
 .btn-buy {
   background-color: var(--highlight);
   color: #000;
@@ -68,30 +80,22 @@ h1 {
 .btn-buy:hover { background-color: #e0a800; }
 .btn-buy:active { transform: scale(0.96); }
 
-#music-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 999;
+#themeToggle {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 14px;
+  background: var(--highlight);
+  transition: background 0.3s, transform 0.1s;
+  margin-top: 8px;
 }
 
-#music-icon svg {
-  width: 30px;
-  height: 30px;
-  fill: var(--highlight);
-  animation: pulse 1s infinite ease-in-out;
+#themeToggle:hover {
+  transform: scale(1.05);
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 0.7; }
-  50% { transform: scale(1.2); opacity: 1; }
-}
-
-@media screen and (max-width: 480px) {
-  .pack { padding: 18px; }
-  h1 { font-size: 22px; }
-}
+/* === NAVIGASI & TOOLS === */
 .breadcrumb ul {
   list-style: none;
   display: flex;
@@ -120,7 +124,8 @@ h1 {
   margin-bottom: 20px;
 }
 
-#langSelect, #searchInput {
+#langSelect,
+#searchInput {
   padding: 8px;
   border-radius: 6px;
   border: none;
@@ -128,10 +133,40 @@ h1 {
   text-align: center;
 }
 
-.lang-en {
-  display: none;
+/* === IKON MUSIK === */
+#music-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  cursor: pointer;
 }
-/* ===== Light Mode Support ===== */
+
+#music-icon svg {
+  width: 30px;
+  height: 30px;
+  fill: var(--highlight);
+  animation: pulse 1s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+/* === NOTIFIKASI LOGIN === */
+#loginNotif {
+  margin: 10px auto;
+  max-width: 420px;
+  border-radius: 8px;
+  padding: 10px;
+  background: #4caf50;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* === LIGHT MODE === */
 body.light-mode {
   background: #f8f8f8;
   color: #111;
@@ -152,29 +187,13 @@ body.light-mode .btn-buy:hover {
   background-color: #333;
 }
 
-/* ===== Tombol Ganti Tema ===== */
-#themeToggle {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  background: var(--highlight);
-  transition: background 0.3s, transform 0.1s;
-  margin-top: 8px;
-}
-#themeToggle:hover {
-  transform: scale(1.05);
-}
+/* === RESPONSIF === */
+@media screen and (max-width: 480px) {
+  .pack {
+    padding: 18px;
+  }
 
-/* ===== Notifikasi Login ===== */
-#loginNotif {
-  margin: 10px auto;
-  max-width: 420px;
-  border-radius: 8px;
-  padding: 10px;
-  background: #4caf50;
-  color: white;
-  font-weight: bold;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  h1 {
+    font-size: 22px;
+  }
   }
