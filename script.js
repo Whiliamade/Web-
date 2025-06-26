@@ -84,6 +84,11 @@ window.addEventListener('DOMContentLoaded', () => {
   if (savedTheme === "light") {
     document.body.classList.add("light-mode");
   }
+  function logout() {
+  localStorage.removeItem("auth");
+  window.location.href = "index.html";
+  }
+}
 
   // 🌓 Tombol ganti tema
   const themeBtn = document.getElementById("themeToggle");
