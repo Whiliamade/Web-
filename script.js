@@ -1,103 +1,106 @@
-// script.js — Fungsi interaktif untuk dashboard
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- Firebase Firestore & Storage Support -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-storage.js";
 
-// Elemen audio latar & suara klik
-const audio = document.getElementById('bgmusic');
-const icon = document.getElementById('music-icon');
-const clickSound = document.getElementById('clickSound');
+    const firebaseConfig = {
+      apiKey: "AIzaSyBvP6inaHIQAlJZG5S96iAEcykO2AWaAyk",
+      authDomain: "memeweb-94369.firebaseapp.com",
+      projectId: "memeweb-94369",
+      storageBucket: "memeweb-94369.appspot.com",
+      messagingSenderId: "209198224630",
+      appId: "1:209198224630:web:c4f4b0835def55523c88d7",
+      measurementId: "G-G052ZX30V7"
+    };
 
-// Toggle music saat ikon diklik
-if (icon && audio) {
-  icon.addEventListener('click', () => {
-    if (audio.paused) {
-      audio.play().catch(e => console.warn("Autoplay error:", e));
-    } else {
-      setTimeout(() => {
-        audio.pause();
-      }, 200);
-    }
-  });
-}
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
 
-// Fungsi main tombol klik
-function playClick() {
-  if (clickSound) {
-    clickSound.currentTime = 0;
-    clickSound.play();
-  }
-}
+    window.uploadFile = async function uploadFile() {
+      const kategori = prompt("Masukkan kategori (misal: Album Perjalanan):");
+      const judul = prompt("Masukkan judul file:");
+      const deskripsi = prompt("Masukkan deskripsi singkat:");
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
 
-// 🔍 Fitur pencarian konten
-function searchContent() {
-  const input = document.getElementById("searchInput");
-  if (!input) return;
+      fileInput.onchange = async () => {
+        const file = fileInput.files[0];
+        if (!file) {
+          alert("Tidak ada file yang dipilih.");
+          return;
+        }
 
-  const keyword = input.value.toLowerCase();
-  const packs = document.querySelectorAll(".pack");
+        try {
+          const storageRef = ref(storage, 'uploads/' + file.name);
+          await uploadBytes(storageRef, file);
+          const downloadURL = await getDownloadURL(storageRef);
 
-  packs.forEach(pack => {
-    const keywords = pack.dataset.keywords.toLowerCase();
-    pack.style.display = keywords.includes(keyword) ? "block" : "none";
-  });
-}
+          await addDoc(collection(db, "koleksi"), {
+            kategori: kategori,
+            judul: judul,
+            deskripsi: deskripsi,
+            url: downloadURL,
+            namaFile: file.name,
+            tanggal: new Date().toISOString()
+          });
 
-// 🌐 Bahasa Ganda + Simpan ke localStorage
-function toggleLanguage() {
-  const langSelect = document.getElementById("langSelect");
-  if (!langSelect) return;
+          alert("✅ File berhasil diunggah dan data disimpan ke Firestore!");
+        } catch (e) {
+          console.error("❌ Gagal:", e);
+          alert("Terjadi kesalahan saat upload atau simpan.");
+        }
+      };
 
-  const lang = langSelect.value;
-  localStorage.setItem("selectedLang", lang);
+      fileInput.click();
+    };
+  </script>
 
-  document.querySelectorAll('.lang-id').forEach(el => {
-    el.style.display = (lang === 'id' ? 'inline' : 'none');
-  });
-  document.querySelectorAll('.lang-en').forEach(el => {
-    el.style.display = (lang === 'en' ? 'inline' : 'none');
-  });
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Pribadi</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
 
-// Saat halaman dimuat
-window.addEventListener('DOMContentLoaded', () => {
-  // ✅ Tampilkan notifikasi jika dari index.html
-  if (document.referrer.includes("index.html")) {
-    const notif = document.getElementById("loginNotif");
-    if (notif) {
-      notif.style.display = "block";
-      setTimeout(() => {
-        notif.style.display = "none";
-      }, 4000);
-    }
-  }
+  <!-- Navigasi dan Galeri -->
+  <nav class="breadcrumb">
+    <ul>
+      <li><a href="dashboard.html">Beranda</a></li>
+      <li>Dashboard</li>
+      <button onclick="logout()">Logout</button>
+    </ul>
+  </nav>
 
-  // 🌐 Terapkan bahasa terakhir
-  const savedLang = localStorage.getItem("selectedLang");
-  if (savedLang) {
-    const langSelect = document.getElementById("langSelect");
-    if (langSelect) {
-      langSelect.value = savedLang;
-      toggleLanguage();
-    }
-  }
+  <!-- Galeri -->
+  <div class="content-area">
+    <div class="pack" data-keywords="dokumentasi keluarga video foto">
+      <h2>📁 Dokumentasi Keluarga</h2>
+      <p>10 Video | 100 Foto</p>
+      <button class="btn-buy" onclick="uploadFile()">Upload File</button>
+    </div>
+    <!-- Tambahan galeri lainnya -->
+  </div>
 
-  // 🌓 Terapkan tema jika sebelumnya dipilih
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "light") {
-    document.body.classList.add("light-mode");
-  }
+  <!-- Audio dan Icon Musik -->
+  <audio id="bgmusic" autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="clickSound">
+    <source src="https://www.myinstants.com/media/sounds/mouse-click.mp3" type="audio/mpeg">
+  </audio>
+  <div id="music-icon" title="Klik untuk play/pause">
+    <svg viewBox="0 0 24 24">
+      <path d="M9 3v12c-.6-.3-1.3-.5-2-.5-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4V8l8-2v7c-.6-.3-1.3-.5-2-.5-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4V3L9 5.5V3z"/>
+    </svg>
+  </div>
 
-  // 🌓 Tombol ganti tema
-  const themeBtn = document.getElementById("themeToggle");
-  if (themeBtn) {
-    themeBtn.addEventListener("click", () => {
-      document.body.classList.toggle("light-mode");
-      const isLight = document.body.classList.contains("light-mode");
-      localStorage.setItem("theme", isLight ? "light" : "dark");
-    });
-  }
-});
-
-// 🔓 Fungsi logout
-function logout() {
-  localStorage.removeItem("auth");
-  window.location.href = "index.html";
-      }
+</body>
+</html>
