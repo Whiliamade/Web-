@@ -196,4 +196,73 @@ body.light-mode .btn-buy:hover {
   h1 {
     font-size: 22px;
   }
+  /* === Tambahan Styling untuk Komponen Baru === */
+#progressContainer {
+  display: none;
+  text-align: center;
+  margin: 20px auto;
+  max-width: 400px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#progressContainer progress {
+  width: 80%;
+  height: 18px;
+  border-radius: 10px;
+}
+
+#progressText {
+  font-weight: bold;
+  color: var(--highlight);
+  margin-top: 10px;
+}
+
+.file-card {
+  background-color: rgba(255,255,255,0.05);
+  border: 1px solid var(--accent);
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  text-align: left;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0 10px rgba(255,204,112,0.15);
+}
+
+.file-card h4 {
+  color: var(--highlight);
+  margin-bottom: 5px;
+}
+
+.file-card button {
+  background: var(--highlight);
+  border: none;
+  padding: 8px 12px;
+  margin-right: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.file-card button:hover {
+  background-color: #e0a800;
+}
+
+#dashboardKoleksi select {
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+body.light-mode .file-card {
+  background: #f2f2f2;
+  border: 1px solid #ccc;
+  color: #111;
   }
+}
