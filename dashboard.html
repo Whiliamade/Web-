@@ -12,6 +12,7 @@
     .file-card button { margin-top: 5px; }
     #dashboardKoleksi { display: none; padding: 20px; }
   </style>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
@@ -34,16 +35,31 @@
     const storage = getStorage(app);
 
     window.uploadFile = async function uploadFile() {
-      const kategori = prompt("Masukkan kategori (misal: Album Perjalanan):");
-      const judul = prompt("Masukkan judul file:");
-      const deskripsi = prompt("Masukkan deskripsi singkat:");
       const fileInput = document.createElement('input');
       fileInput.type = 'file';
 
       fileInput.onchange = async () => {
         const file = fileInput.files[0];
         if (!file) {
-          alert("Tidak ada file yang dipilih.");
+          alert("❌ Tidak ada file yang dipilih.");
+          return;
+        }
+
+        const kategori = prompt("Masukkan kategori (misal: Album Perjalanan):");
+        if (!kategori || kategori.trim() === "") {
+          alert("⚠️ Kategori tidak boleh kosong!");
+          return;
+        }
+
+        const judul = prompt("Masukkan judul file:");
+        if (!judul || judul.trim() === "") {
+          alert("⚠️ Judul tidak boleh kosong!");
+          return;
+        }
+
+        const deskripsi = prompt("Masukkan deskripsi (WAJIB):");
+        if (!deskripsi || deskripsi.trim() === "") {
+          alert("⚠️ Deskripsi wajib diisi! Upload dibatalkan.");
           return;
         }
 
@@ -82,12 +98,14 @@
             progressContainer.style.display = "none";
             tampilkanKoleksi();
           });
+
         } catch (e) {
           console.error("❌ Gagal:", e);
           alert("Terjadi kesalahan saat upload atau simpan.");
         }
       };
 
+      // 🟢 Sekarang: langsung buka file picker lebih dulu
       fileInput.click();
     };
 
@@ -204,4 +222,4 @@
     </svg>
   </div>
 </body>
-  </html>
+</html>
