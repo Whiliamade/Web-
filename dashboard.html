@@ -1,63 +1,76 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <!-- Firebase Firestore & Storage Support -->
   <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-storage.js";
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyBvP6inaHIQAlJZG5S96iAEcykO2AWaAyk",
-    authDomain: "memeweb-94369.firebaseapp.com",
-    projectId: "memeweb-94369",
-    storageBucket: "memeweb-94369.firebasestorage.app",
-    messagingSenderId: "209198224630",
-    appId: "1:209198224630:web:c4f4b0835def55523c88d7",
-    measurementId: "G-G052ZX30V7"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyBvP6inaHIQAlJZG5S96iAEcykO2AWaAyk",
+      authDomain: "memeweb-94369.firebaseapp.com",
+      projectId: "memeweb-94369",
+      storageBucket: "memeweb-94369.appspot.com",
+      messagingSenderId: "209198224630",
+      appId: "1:209198224630:web:c4f4b0835def55523c88d7",
+      measurementId: "G-G052ZX30V7"
+    };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    window.uploadFile = async function uploadFile() {
+      const kategori = prompt("Masukkan kategori (misal: Album Perjalanan):");
+      const judul = prompt("Masukkan judul file:");
+      const deskripsi = prompt("Masukkan deskripsi singkat:");
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+
+      fileInput.onchange = async () => {
+        const file = fileInput.files[0];
+        if (!file) {
+          alert("Tidak ada file yang dipilih.");
+          return;
+        }
+
+        try {
+          const storageRef = ref(storage, 'uploads/' + file.name);
+          await uploadBytes(storageRef, file);
+          const downloadURL = await getDownloadURL(storageRef);
+
+          await addDoc(collection(db, "koleksi"), {
+            kategori: kategori,
+            judul: judul,
+            deskripsi: deskripsi,
+            url: downloadURL,
+            namaFile: file.name,
+            tanggal: new Date().toISOString()
+          });
+
+          alert("✅ File berhasil diunggah dan data disimpan ke Firestore!");
+        } catch (e) {
+          console.error("❌ Gagal:", e);
+          alert("Terjadi kesalahan saat upload atau simpan.");
+        }
+      };
+
+      fileInput.click();
+    };
   </script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Dashboard Pribadi & Galeri Eksklusif" />
-  <meta name="keywords" content="dashboard, galeri pribadi, koleksi, file, upload" />
-  <meta name="author" content="lonely_Hawcker" />
-  <title>💎 Dashboard Pribadi</title>
-
-  <!-- CSS -->
+  <title>Dashboard Pribadi</title>
   <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
 </head>
 <body>
-<footer style="text-align: center; padding: 10px 0; font-size: 13px; margin-top: 40px;">
-  <!-- Proteksi redirect -->
-  <p style="color: #ccc;">🚀 Status Deploy Web:</p>
-  <a href="https://app.netlify.com/projects/viralidnet/deploys" target="_blank" style="display:inline-block;">
-    <img src="https://api.netlify.com/api/v1/badges/d9276ec6-1911-4577-ba5e-119fbf51cfdb/deploy-status"
-         alt="Netlify Status"
-         style="border: none; max-width: 140px; height: auto;" />
-  </a>
-</footer>
-  <!-- Proteksi redirect -->
-  <script>
-    if (localStorage.getItem("auth") !== "true") {
-      window.location.href = "index.html";
-    }
-  </script>
 
-  <!-- Notifikasi login -->
-  <div id="loginNotif" style="display:none;">
-    ✅ Selamat datang kembali, lonely_Hawcker!
-  </div>
-
-  <!-- Navigasi -->
+  <!-- Navigasi dan Galeri -->
   <nav class="breadcrumb">
     <ul>
       <li><a href="dashboard.html">Beranda</a></li>
@@ -66,72 +79,28 @@
     </ul>
   </nav>
 
-  <!-- Bagian Atas -->
-  <div class="top-bar">
-    <h1>💎 <span class="highlight">Koleksi Pribadi</span></h1>
-    <p>Credit: <span class="highlight">lonely_Hawcker</span></p>
-
-    <select id="langSelect" onchange="toggleLanguage()">
-      <option value="id">🇮🇩 Indonesia</option>
-      <option value="en">🇺🇸 English</option>
-    </select>
-
-    <input type="text" id="searchInput" onkeyup="searchContent()" placeholder="🔍 Cari konten...">
-
-    <button id="themeToggle">🌓 Ganti Tema</button>
-  </div>
-
-  <!-- Konten Galeri -->
+  <!-- Galeri -->
   <div class="content-area">
     <div class="pack" data-keywords="dokumentasi keluarga video foto">
       <h2>📁 Dokumentasi Keluarga</h2>
       <p>10 Video | 100 Foto</p>
       <button class="btn-buy" onclick="uploadFile()">Upload File</button>
     </div>
-
-    <div class="pack" data-keywords="album perjalanan video foto">
-      <h2>🌄 Album Perjalanan</h2>
-      <p>3 Video | 27 Foto</p>
-      <button class="btn-buy" onclick="uploadFile()">Upload File</button>
-    </div>
-
-    <div class="pack" data-keywords="koleksi pribadi file media">
-      <h2>🔒 Koleksi Pribadi</h2>
-      <p>13 Video | 56 Foto</p>
-      <button class="btn-buy" onclick="uploadFile()">Upload File</button>
-    </div>
+    <!-- Tambahan galeri lainnya -->
   </div>
 
-  <!-- Musik Latar -->
+  <!-- Audio dan Icon Musik -->
   <audio id="bgmusic" autoplay loop>
     <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
   </audio>
-
-  <!-- Suara Klik -->
   <audio id="clickSound">
     <source src="https://www.myinstants.com/media/sounds/mouse-click.mp3" type="audio/mpeg">
   </audio>
-
-  <!-- Ikon Musik -->
   <div id="music-icon" title="Klik untuk play/pause">
     <svg viewBox="0 0 24 24">
       <path d="M9 3v12c-.6-.3-1.3-.5-2-.5-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4V8l8-2v7c-.6-.3-1.3-.5-2-.5-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4V3L9 5.5V3z"/>
     </svg>
   </div>
-
-  <!-- Script Fungsional -->
-  <script>
-    function uploadFile() {
-      document.getElementById('clickSound').play();
-      window.open("https://forms.gle/yEEFf1b7pAN5ruE88", "_blank");
-    }
-
-    document.getElementById('music-icon').addEventListener('click', function () {
-      const music = document.getElementById('bgmusic');
-      if (music.paused) music.play();
-      else music.pause();
-    });
-  </script>
 
 </body>
 </html>
